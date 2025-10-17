@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // Get backend configuration from environment variables
-const BACKEND_HOST = import.meta.env.VITE_BACKEND_HOST || 'localhost'
-const BACKEND_PORT = import.meta.env.VITE_BACKEND_PORT || '5000'
+const BACKEND_HOST = import.meta.env.BACKEND_HOST || 'localhost'
+const BACKEND_PORT = import.meta.env.BACKEND_PORT || '5000'
 
 // Construct the base API URL
 const API_BASE_URL = `http://${BACKEND_HOST}:${BACKEND_PORT}`

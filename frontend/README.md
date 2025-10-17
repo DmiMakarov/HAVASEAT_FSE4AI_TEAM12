@@ -9,7 +9,7 @@ A Vue 3 + Vite application for uploading images and recognizing digits using a b
 - 🔢 Display recognized digits from backend
 - ⚡ Fast and modern UI with Vue 3 + Vite
 - 🎨 Clean, minimal design with responsive layout
-- ⚙️ Configurable backend connection via environment variables
+- ⚙️ Configurable frontend and backend via environment variables
 
 ## Prerequisites
 
@@ -23,13 +23,18 @@ A Vue 3 + Vite application for uploading images and recognizing digits using a b
 npm install
 ```
 
-2. Create a `.env` file in the root directory (copy from `env.example`):
+2. Create a `.env` file in the root directory (copy from `../env.example`):
 ```bash
-cp env.example .env
+cp ../env.example .env
 ```
 
-3. Configure your backend settings in `.env`:
+3. Configure your settings in `.env`:
 ```env
+# Frontend server configuration
+VITE_FRONTEND_HOST=localhost
+VITE_FRONTEND_PORT=3000
+
+# Backend API configuration
 VITE_BACKEND_HOST=localhost
 VITE_BACKEND_PORT=5000
 ```
@@ -41,7 +46,7 @@ Run the development server:
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`
+The application will be available at the host and port specified in your `.env` file (default: `http://localhost:3000`)
 
 ## Build for Production
 
