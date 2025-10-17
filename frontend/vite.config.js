@@ -10,7 +10,15 @@ export default defineConfig(({ mode }) => {
     plugins: [vue()],
     server: {
       host: env.VITE_FRONTEND_HOST || 'localhost',
-      port: parseInt(env.VITE_FRONTEND_PORT) || 3000
+      port: parseInt(env.VITE_FRONTEND_PORT) || 3000,
+      watch: {
+        usePolling: true,  // Necessary for Docker on some systems
+        interval: 100
+      },
+      strictPort: true,
+      hmr: {
+        clientPort: parseInt(env.VITE_FRONTEND_PORT) || 3000
+      }
     }
   }
 })

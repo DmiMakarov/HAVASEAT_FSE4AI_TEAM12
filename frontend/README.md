@@ -48,17 +48,24 @@ npm run dev
 
 The application will be available at the host and port specified in your `.env` file (default: `http://localhost:3000`)
 
-## Build for Production
+## Testing
 
-Build the application:
+Run the test suite:
 ```bash
-npm run build
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test -- --watch
+
+# Run tests with UI
+npm run test:ui
+
+# Run tests with coverage
+npm run test:coverage
 ```
 
-Preview the production build:
-```bash
-npm run preview
-```
+For detailed testing documentation, see [TESTING.md](./TESTING.md)
 
 ## Backend API Requirements
 

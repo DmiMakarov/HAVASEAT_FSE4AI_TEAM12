@@ -39,6 +39,9 @@ const apiService = {
       } else if (error.request) {
         // Request was made but no response received
         throw new Error('Cannot connect to backend. Please check if the server is running.')
+      } else if (error.code === 'ERR_NETWORK') {
+        // Network error
+        throw new Error('Cannot connect to backend. Please check if the server is running.')
       } else {
         // Something else went wrong
         throw new Error('An error occurred while processing the request')

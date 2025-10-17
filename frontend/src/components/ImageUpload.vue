@@ -198,6 +198,7 @@ export default {
       triggerFileInput,
       handleFileSelect,
       handleDrop,
+      processFile,
       recognizeImage,
       clearImage
     }
