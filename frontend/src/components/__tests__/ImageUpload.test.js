@@ -50,20 +50,20 @@ describe('ImageUpload Component', () => {
   describe('File Selection', () => {
     it('should handle file selection via input', async () => {
       wrapper = mount(ImageUpload)
-      
+
       const file = new File(['test'], 'test.png', { type: 'image/png' })
-      
+
       // Mock FileReader
       global.FileReader = class {
         readAsDataURL() {
           this.onload({ target: { result: 'data:image/png;base64,test' } })
         }
       }
-      
+
       // Directly call processFile since we can't set file input values in jsdom
       await wrapper.vm.processFile(file)
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.vm.selectedFile).toBeTruthy()
     })
 
