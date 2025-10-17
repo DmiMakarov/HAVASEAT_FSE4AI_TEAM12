@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import App from '../App.vue'
-import ImageUpload from '../components/ImageUpload.vue'
+import App from '../src/App.vue'
+import ImageUpload from '../src/components/ImageUpload.vue'
 
 describe('App Component', () => {
   it('should render the App component', () => {

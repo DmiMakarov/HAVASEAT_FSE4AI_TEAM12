@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ImageUpload from '../ImageUpload.vue'
-import apiService from '../../services/api.js'
+import ImageUpload from '../../src/components/ImageUpload.vue'
+import apiService from '../../src/services/api.js'
 
 // Mock the API service
-vi.mock('../../services/api.js', () => ({
+vi.mock('../../src/services/api.js', () => ({
   default: {
     recognizeDigits: vi.fn()
   }

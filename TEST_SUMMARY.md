@@ -17,7 +17,9 @@ Comprehensive test suite for the Vue Digit Recognition frontend application usin
 
 ## 📁 Test Files
 
-### 1. API Service Tests (`src/services/__tests__/api.test.js`)
+All tests are organized in the `tests/` folder at the frontend root level (similar to Python project structure).
+
+### 1. API Service Tests (`tests/services/api.test.js`)
 
 Tests the backend communication layer with mocked HTTP requests.
 
@@ -38,7 +40,7 @@ Tests the backend communication layer with mocked HTTP requests.
 - Validates request/response formats
 - Ensures proper timeout configuration
 
-### 2. ImageUpload Component Tests (`src/components/__tests__/ImageUpload.test.js`)
+### 2. ImageUpload Component Tests (`tests/components/ImageUpload.test.js`)
 
 Comprehensive tests for the main upload component with user interaction testing.
 
@@ -67,7 +69,7 @@ Comprehensive tests for the main upload component with user interaction testing.
 - Button disabling during operations
 - Clear and reset functionality
 
-### 3. App Component Tests (`src/__tests__/App.test.js`)
+### 3. App Component Tests (`tests/App.test.js`)
 
 Basic tests for the root application component.
 

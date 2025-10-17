@@ -158,19 +158,19 @@ docker-compose up -d frontend
     ├── vite.config.js          # Vite configuration
     ├── vitest.config.js        # Test configuration
     ├── TESTING.md              # Testing guide
-    └── src/
-        ├── main.js             # Application entry point
-        ├── App.vue             # Root component
-        ├── __tests__/          # App-level tests
-        │   └── App.test.js
-        ├── components/         # Vue components
-        │   ├── ImageUpload.vue
-        │   └── __tests__/      # Component tests
-        │       └── ImageUpload.test.js
-        └── services/           # API services
-            ├── api.js
-            └── __tests__/      # Service tests
-                └── api.test.js
+    ├── src/
+    │   ├── main.js             # Application entry point
+    │   ├── App.vue             # Root component
+    │   ├── components/         # Vue components
+    │   │   └── ImageUpload.vue
+    │   └── services/           # API services
+    │       └── api.js
+    └── tests/                  # All test files (like Python)
+        ├── App.test.js         # App tests
+        ├── components/
+        │   └── ImageUpload.test.js
+        └── services/
+            └── api.test.js
 ```
 
 ## 🔧 Configuration

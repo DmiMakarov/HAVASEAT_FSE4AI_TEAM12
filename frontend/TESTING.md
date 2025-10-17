@@ -52,16 +52,19 @@ npm run test:coverage
 
 ## Test Structure
 
+Tests are organized in a dedicated `tests/` folder (similar to Python projects):
+
 ```
-frontend/src/
-├── __tests__/
-│   └── App.test.js              # App component tests
-├── components/
-│   └── __tests__/
-│       └── ImageUpload.test.js  # ImageUpload component tests
-└── services/
-    └── __tests__/
-        └── api.test.js          # API service tests
+frontend/
+├── src/                        # Source code
+│   ├── components/
+│   └── services/
+└── tests/                      # All tests in one place
+    ├── App.test.js             # App component tests
+    ├── components/
+    │   └── ImageUpload.test.js # Component tests
+    └── services/
+        └── api.test.js         # API service tests
 ```
 
 ## Test Coverage

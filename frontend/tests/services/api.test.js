@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import apiService from '../api.js'
+import apiService from '../../src/services/api.js'
 
 describe('API Service', () => {
   let mock
