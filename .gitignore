@@ -32,7 +32,14 @@ Thumbs.db
 # Temporary files
 *.tmp
 .cache/
+**/__pycache__/
 
 # Node modules
 node_modules/
 **/node_modules/
+
+# Python virtualenv
+.venv/
+
+# Personal notes
+notes*
