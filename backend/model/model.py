@@ -1,15 +1,18 @@
-from loader import ModelLoader as Loader
-from numpy.typing import NDArray
+from typing import Tuple
+
+import numpy as np
+
+from .onnx import ONNXModel as ONNX
 
 
 class MNISTModel:
-    def __init__(self, *args, **kwargs):
-        self.loader = Loader("mnist-12.onnx")
-        pass
+    """Simple mnist digit classifier that incapsulates ONNX model"""
 
-    def recognize_digit(self, image: NDArray) -> int | None:
-        model = self.loader.model
-        return model.infer(image)
+    def __init__(self, *args, **kwargs):
+        self.__onnx = ONNX("mnist-12.onnx")
+
+    def recognize_digit(self, image: np.ndarray) -> tuple[int, float] | None:
+        return self.__onnx.infer(image)
 
 
 if __name__ == "__main__":
