@@ -2,10 +2,11 @@
 Shared test fixtures and configuration
 """
 
-import pytest
-import numpy as np
-from PIL import Image
 import io
+
+import numpy as np
+import pytest
+from PIL import Image
 
 
 @pytest.fixture

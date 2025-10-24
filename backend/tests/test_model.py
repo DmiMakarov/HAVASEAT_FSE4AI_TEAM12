@@ -2,15 +2,15 @@
 Unit tests for the MNIST model classes
 """
 
-import pytest
-import numpy as np
-import cv2
-from unittest.mock import Mock, patch, MagicMock
 import io
-from PIL import Image
+from unittest.mock import MagicMock, Mock, patch
 
+import cv2
+import numpy as np
+import pytest
 from model.model import MNISTModel
 from model.onnx import ONNXModel
+from PIL import Image
 
 
 class TestMNISTModel:

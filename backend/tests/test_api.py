@@ -3,14 +3,14 @@ FastAPI endpoint tests using pytest and httpx
 """
 
 import io
-import pytest
-import httpx
-from fastapi.testclient import TestClient
 from unittest.mock import Mock, patch
-import numpy as np
-from PIL import Image
 
+import httpx
+import numpy as np
+import pytest
 from app import app
+from fastapi.testclient import TestClient
+from PIL import Image
 
 
 @pytest.fixture

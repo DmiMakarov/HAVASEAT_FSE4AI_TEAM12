@@ -2,15 +2,15 @@
 Performance and load tests
 """
 
-import pytest
-import time
 import concurrent.futures
-from fastapi.testclient import TestClient
-from unittest.mock import patch
 import io
-from PIL import Image
+import time
+from unittest.mock import patch
 
+import pytest
 from app import app
+from fastapi.testclient import TestClient
+from PIL import Image
 
 
 @pytest.fixture

@@ -4,6 +4,7 @@ Script to create test images for digit recognition testing
 
 import os
 import random
+
 from PIL import Image, ImageDraw, ImageFont
 
 
