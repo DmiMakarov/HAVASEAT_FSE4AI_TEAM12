@@ -1,0 +1,6 @@
+How to run a test?
+pytest tests/test_app.py -v 
+
+In order for this two .py files to work you need to replace the name of the 
+import in both files 
+
