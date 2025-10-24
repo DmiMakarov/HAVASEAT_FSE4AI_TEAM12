@@ -1,10 +1,19 @@
-import cv2
-import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from model.model import MNISTModel as Model
 
 app = FastAPI(title="Digit Recognition API", version="1.0.0")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 model = Model()
 
 
@@ -18,29 +27,14 @@ async def recognize_digit_endpoint(image_file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="File must be an image")
 
     try:
-
         image_bytes = await image_file.read()
+        result = model.process_and_recognize(image_bytes, image_file.filename)
+        return JSONResponse(content=result)
 
-        nparr = np.frombuffer(image_bytes, np.uint8)
-        if nparr is None:
-            raise HTTPException(status_code=400, detail="Could not decode image")
-
-        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        digit, confidence = model.recognize_digit(image)
-        if digit is None or confidence is None:
-            raise HTTPException(status_code=500, detail=f"Model inference error")
-
-        return JSONResponse(
-            content={
-                "status": "success",
-                "recognized_digit": digit,
-                "model_confidence": round(confidence, 3),
-                "filename": image_file.filename,
-            }
-        )
-
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
 @app.get("/")
