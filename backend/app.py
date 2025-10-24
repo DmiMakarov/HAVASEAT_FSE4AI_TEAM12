@@ -26,11 +26,18 @@ async def recognize_digit_endpoint(image_file: UploadFile = File(...)):
             raise HTTPException(status_code=400, detail="Could not decode image")
 
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        result = model.recognize_digit(image)
-        if result is None:
-            result = "Recognition failed"
+        digit, confidence = model.recognize_digit(image)
+        if digit is None or confidence is None:
+            raise HTTPException(status_code=500, detail=f"Model inference error")
 
-        return JSONResponse(content={"status": "success", "recognized_digit": result, "filename": image_file.filename})
+        return JSONResponse(
+            content={
+                "status": "success",
+                "recognized_digit": digit,
+                "model_confidence": round(confidence, 3),
+                "filename": image_file.filename,
+            }
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")

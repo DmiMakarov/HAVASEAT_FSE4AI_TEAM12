@@ -49,7 +49,7 @@ class ONNXModel:
         arr = np.expand_dims(arr, axis=0)
         return arr.astype(np.float32)
 
-    def infer(self, image: np.ndarray) -> Tuple[int, float] | None:
+    def infer(self, image: np.ndarray) -> Tuple[int, float] | Tuple[None, None]:
         """
         Run model on a single OpenCV-decoded image (np.ndarray).
         Returns (pred_index, confidence) or None on failure.
@@ -63,7 +63,7 @@ class ONNXModel:
             idx = int(np.argmax(probs))
             return idx, float(probs[idx])
         except:
-            return None
+            return None, None
 
 
 if __name__ == "__main__":
