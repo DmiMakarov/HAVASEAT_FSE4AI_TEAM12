@@ -1,4 +1,4 @@
-name: CI - backend tests + formatting check
+name: CI - black/isort formatting check + backend/frontend tests
 
 on:
   push:
@@ -28,14 +28,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Run backend tests
-        run: |
-          cd backend
-          pytest -q
-
       - name: Check formatting (black/isort)
         run: |
           pip install black isort
           black --check .
           isort --check-only .
+
+      - name: Run backend tests
+        run: |
+          cd backend
+          pytest -q
+
+      - name: Run frontend tests
+        run: |
+          make test
+
           
