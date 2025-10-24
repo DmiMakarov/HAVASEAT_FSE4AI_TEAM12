@@ -60,6 +60,7 @@
           Clear
         </button>
       </div>
+
     </div>
 
     <!-- Error Message -->
@@ -160,13 +161,9 @@ export default {
       try {
         const response = await apiService.recognizeDigits(selectedFile.value)
 
-        // Handle different response formats
-        if (response.digits !== undefined) {
-          recognizedDigits.value = response.digits
-        } else if (response.result !== undefined) {
-          recognizedDigits.value = response.result
-        } else if (response.recognized_digits !== undefined) {
-          recognizedDigits.value = response.recognized_digits
+        // Handle response format from backend
+        if (response.recognized_digit !== undefined) {
+          recognizedDigits.value = response.recognized_digit
         } else {
           recognizedDigits.value = JSON.stringify(response)
         }
@@ -186,6 +183,7 @@ export default {
         fileInput.value.value = ''
       }
     }
+
 
     return {
       fileInput,
@@ -739,6 +737,7 @@ h1 {
     padding: 2rem 1.5rem;
   }
 }
+
 </style>
 
 
