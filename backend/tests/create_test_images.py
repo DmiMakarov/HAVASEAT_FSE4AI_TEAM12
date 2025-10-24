@@ -1,6 +1,7 @@
 """
 Script to create test images for digit recognition testing
 """
+
 import os
 import random
 from PIL import Image, ImageDraw, ImageFont
@@ -8,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def create_digit_image(digit, size=(28, 28)):
     """Create a test image with a specific digit"""
-    img = Image.new('L', size, color=0)  # Black background
+    img = Image.new("L", size, color=0)  # Black background
     draw = ImageDraw.Draw(img)
 
     try:
@@ -43,14 +44,14 @@ def create_noisy_image(base_img):
         new_pixel = max(0, min(255, pixel + noise))
         noisy_pixels.append(new_pixel)
 
-    noisy_img = Image.new('L', base_img.size)
+    noisy_img = Image.new("L", base_img.size)
     noisy_img.putdata(noisy_pixels)
     return noisy_img
 
 
 def create_test_images():
     """Create test images for digits 0-9"""
-    test_dir = os.path.join(os.path.dirname(__file__), 'pictures')
+    test_dir = os.path.join(os.path.dirname(__file__), "pictures")
     os.makedirs(test_dir, exist_ok=True)
 
     for digit in range(10):

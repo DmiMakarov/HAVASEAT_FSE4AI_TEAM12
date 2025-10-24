@@ -28,7 +28,7 @@ def run_tests():
         ("API Tests", [python_cmd, "-m", "pytest", "tests/test_api.py", "-v", "-m", "api"]),
         ("Integration Tests", [python_cmd, "-m", "pytest", "tests/test_api.py", "-v", "-m", "integration"]),
         ("Performance Tests", [python_cmd, "-m", "pytest", "tests/test_performance.py", "-v", "-m", "performance"]),
-        ("All Tests", [python_cmd, "-m", "pytest", "tests/", "-v"])
+        ("All Tests", [python_cmd, "-m", "pytest", "tests/", "-v"]),
     ]
 
     results = {}
@@ -39,11 +39,7 @@ def run_tests():
 
         try:
             result = subprocess.run(command, capture_output=True, text=True, timeout=300)
-            results[test_name] = {
-                "returncode": result.returncode,
-                "stdout": result.stdout,
-                "stderr": result.stderr
-            }
+            results[test_name] = {"returncode": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
 
             if result.returncode == 0:
                 print(f"✅ {test_name} PASSED")

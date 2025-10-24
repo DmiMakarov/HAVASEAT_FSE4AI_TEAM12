@@ -1,6 +1,7 @@
 """
 Unit tests for the MNIST model classes
 """
+
 import pytest
 import numpy as np
 import cv2
@@ -25,22 +26,22 @@ class TestMNISTModel:
     @pytest.fixture
     def mnist_model(self, mock_onnx_model):
         """Create MNISTModel instance with mocked ONNX"""
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx_class.return_value = mock_onnx_model
             return MNISTModel()
 
     @pytest.fixture
     def sample_image_bytes(self):
         """Create sample image bytes"""
-        img = Image.new('L', (28, 28), color=128)
+        img = Image.new("L", (28, 28), color=128)
         img_bytes = io.BytesIO()
-        img.save(img_bytes, format='PNG')
+        img.save(img_bytes, format="PNG")
         return img_bytes.getvalue()
 
     @pytest.mark.unit
     def test_mnist_model_initialization(self, mock_onnx_model):
         """Test MNISTModel initialization"""
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx_class.return_value = mock_onnx_model
             model = MNISTModel()
             assert model is not None
@@ -62,7 +63,7 @@ class TestMNISTModel:
         """Test digit recognition failure"""
         mock_onnx_model.infer.return_value = (None, None)
 
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx_class.return_value = mock_onnx_model
             model = MNISTModel()
 
@@ -95,13 +96,13 @@ class TestMNISTModel:
         """Test image processing when model fails"""
         mock_onnx_model.infer.return_value = (None, None)
 
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx_class.return_value = mock_onnx_model
             model = MNISTModel()
 
-            img = Image.new('L', (28, 28), color=128)
+            img = Image.new("L", (28, 28), color=128)
             img_bytes = io.BytesIO()
-            img.save(img_bytes, format='PNG')
+            img.save(img_bytes, format="PNG")
 
             with pytest.raises(ValueError, match="Model inference error"):
                 model.process_and_recognize(img_bytes.getvalue(), "test.png")
@@ -109,12 +110,12 @@ class TestMNISTModel:
     @pytest.mark.unit
     def test_process_and_recognize_cv2_error(self, mnist_model):
         """Test image processing with OpenCV error"""
-        with patch('cv2.imdecode') as mock_imdecode:
+        with patch("cv2.imdecode") as mock_imdecode:
             mock_imdecode.return_value = None
 
-            img = Image.new('L', (28, 28), color=128)
+            img = Image.new("L", (28, 28), color=128)
             img_bytes = io.BytesIO()
-            img.save(img_bytes, format='PNG')
+            img.save(img_bytes, format="PNG")
 
             with pytest.raises(ValueError, match="Could not decode image"):
                 mnist_model.process_and_recognize(img_bytes.getvalue(), "test.png")
@@ -142,14 +143,14 @@ class TestONNXModel:
     @pytest.fixture
     def onnx_model(self, mock_session):
         """Create ONNXModel instance with mocked session"""
-        with patch('model.onnx.ort.InferenceSession') as mock_inference:
+        with patch("model.onnx.ort.InferenceSession") as mock_inference:
             mock_inference.return_value = mock_session
             return ONNXModel("dummy.onnx")
 
     @pytest.mark.unit
     def test_onnx_model_initialization(self, mock_session):
         """Test ONNXModel initialization"""
-        with patch('model.onnx.ort.InferenceSession') as mock_inference:
+        with patch("model.onnx.ort.InferenceSession") as mock_inference:
             mock_inference.return_value = mock_session
             model = ONNXModel("dummy.onnx")
             assert model is not None
@@ -161,8 +162,7 @@ class TestONNXModel:
         # Create a color image (BGR format)
         color_image = np.random.randint(0, 255, (28, 28, 3), dtype=np.uint8)
 
-        with patch('cv2.cvtColor') as mock_cvtcolor, \
-             patch('cv2.resize') as mock_resize:
+        with patch("cv2.cvtColor") as mock_cvtcolor, patch("cv2.resize") as mock_resize:
             mock_cvtcolor.return_value = np.random.randint(0, 255, (28, 28), dtype=np.uint8)
             mock_resize.return_value = np.random.randint(0, 255, (28, 28), dtype=np.uint8)
 
@@ -177,7 +177,7 @@ class TestONNXModel:
         """Test preprocessing of grayscale image"""
         gray_image = np.random.randint(0, 255, (28, 28), dtype=np.uint8)
 
-        with patch('cv2.resize') as mock_resize:
+        with patch("cv2.resize") as mock_resize:
             mock_resize.return_value = gray_image
 
             result = onnx_model._ONNXModel__preprocess(gray_image)
@@ -210,7 +210,7 @@ class TestONNXModel:
         """Test inference failure"""
         mock_session.run.side_effect = Exception("ONNX error")
 
-        with patch('model.onnx.ort.InferenceSession') as mock_inference:
+        with patch("model.onnx.ort.InferenceSession") as mock_inference:
             mock_inference.return_value = mock_session
             model = ONNXModel("dummy.onnx")
 
@@ -227,7 +227,7 @@ class TestModelIntegration:
     @pytest.mark.integration
     def test_full_model_pipeline(self):
         """Test the complete model pipeline with real image processing"""
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx = Mock()
             mock_onnx.infer.return_value = (7, 0.89)
             mock_onnx_class.return_value = mock_onnx
@@ -235,9 +235,9 @@ class TestModelIntegration:
             model = MNISTModel()
 
             # Create a real image
-            img = Image.new('L', (28, 28), color=128)
+            img = Image.new("L", (28, 28), color=128)
             img_bytes = io.BytesIO()
-            img.save(img_bytes, format='PNG')
+            img.save(img_bytes, format="PNG")
 
             result = model.process_and_recognize(img_bytes.getvalue(), "integration_test.png")
 
@@ -249,7 +249,7 @@ class TestModelIntegration:
     @pytest.mark.integration
     def test_model_with_different_image_sizes(self):
         """Test model with different image sizes"""
-        with patch('model.model.ONNX') as mock_onnx_class:
+        with patch("model.model.ONNX") as mock_onnx_class:
             mock_onnx = Mock()
             mock_onnx.infer.return_value = (3, 0.92)
             mock_onnx_class.return_value = mock_onnx
@@ -258,9 +258,9 @@ class TestModelIntegration:
 
             # Test with different image sizes
             for size in [(32, 32), (64, 64), (14, 14)]:
-                img = Image.new('L', size, color=128)
+                img = Image.new("L", size, color=128)
                 img_bytes = io.BytesIO()
-                img.save(img_bytes, format='PNG')
+                img.save(img_bytes, format="PNG")
 
                 result = model.process_and_recognize(img_bytes.getvalue(), f"test_{size[0]}x{size[1]}.png")
 

@@ -1,6 +1,7 @@
 """
 Performance and load tests
 """
+
 import pytest
 import time
 import concurrent.futures
@@ -21,9 +22,9 @@ def client():
 @pytest.fixture
 def sample_image_bytes():
     """Create a sample image for testing"""
-    img = Image.new('L', (28, 28), color=128)
+    img = Image.new("L", (28, 28), color=128)
     img_bytes = io.BytesIO()
-    img.save(img_bytes, format='PNG')
+    img.save(img_bytes, format="PNG")
     return img_bytes.getvalue()
 
 
@@ -33,12 +34,12 @@ class TestPerformance:
     @pytest.mark.performance
     def test_single_request_performance(self, client, sample_image_bytes):
         """Test performance of a single request"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             start_time = time.time()
@@ -52,12 +53,12 @@ class TestPerformance:
     @pytest.mark.performance
     def test_concurrent_requests(self, client, sample_image_bytes):
         """Test handling of concurrent requests"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             def make_request():
@@ -76,17 +77,17 @@ class TestPerformance:
     def test_memory_usage_with_large_images(self, client):
         """Test memory usage with large images"""
         # Create a large image
-        large_img = Image.new('L', (500, 500), color=128)
+        large_img = Image.new("L", (500, 500), color=128)
         img_bytes = io.BytesIO()
-        large_img.save(img_bytes, format='PNG')
+        large_img.save(img_bytes, format="PNG")
         large_image_bytes = img_bytes.getvalue()
 
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "large.png"
+                "filename": "large.png",
             }
 
             files = {"image_file": ("large.png", large_image_bytes, "image/png")}
@@ -97,12 +98,12 @@ class TestPerformance:
     @pytest.mark.performance
     def test_response_time_consistency(self, client, sample_image_bytes):
         """Test that response times are consistent"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             response_times = []
@@ -132,12 +133,12 @@ class TestLoadTesting:
     @pytest.mark.load
     def test_rapid_sequential_requests(self, client, sample_image_bytes):
         """Test rapid sequential requests"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             # Make 20 rapid requests
@@ -149,12 +150,12 @@ class TestLoadTesting:
     @pytest.mark.load
     def test_mixed_request_types(self, client, sample_image_bytes):
         """Test mixed request types (valid and invalid)"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             # Mix of valid and invalid requests

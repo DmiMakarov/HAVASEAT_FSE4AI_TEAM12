@@ -1,6 +1,7 @@
 """
 FastAPI endpoint tests using pytest and httpx
 """
+
 import io
 import pytest
 import httpx
@@ -22,9 +23,9 @@ def client():
 def sample_image_bytes():
     """Create a sample image for testing"""
     # Create a simple 28x28 grayscale image (MNIST format)
-    img = Image.new('L', (28, 28), color=128)  # Gray image
+    img = Image.new("L", (28, 28), color=128)  # Gray image
     img_bytes = io.BytesIO()
-    img.save(img_bytes, format='PNG')
+    img.save(img_bytes, format="PNG")
     return img_bytes.getvalue()
 
 
@@ -58,13 +59,13 @@ class TestDigitRecognitionEndpoint:
     @pytest.mark.api
     def test_recognize_digit_success(self, client, sample_image_bytes):
         """Test successful digit recognition"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             # Mock the model response
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 5,
                 "model_confidence": 0.95,
-                "filename": "test.png"
+                "filename": "test.png",
             }
 
             files = {"image_file": ("test.png", sample_image_bytes, "image/png")}
@@ -95,7 +96,7 @@ class TestDigitRecognitionEndpoint:
     @pytest.mark.api
     def test_recognize_digit_model_error(self, client, sample_image_bytes):
         """Test recognition when model raises an error"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.side_effect = ValueError("Model error")
 
             files = {"image_file": ("test.png", sample_image_bytes, "image/png")}
@@ -107,7 +108,7 @@ class TestDigitRecognitionEndpoint:
     @pytest.mark.api
     def test_recognize_digit_unexpected_error(self, client, sample_image_bytes):
         """Test recognition with unexpected error"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.side_effect = Exception("Unexpected error")
 
             files = {"image_file": ("test.png", sample_image_bytes, "image/png")}
@@ -145,7 +146,7 @@ class TestErrorHandling:
         large_image = b"x" * (10 * 1024 * 1024)  # 10MB
         files = {"image_file": ("large.png", large_image, "image/png")}
 
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.side_effect = ValueError("File too large")
             response = client.post("/recognize_digit", files=files)
             assert response.status_code == 400
@@ -156,7 +157,7 @@ class TestErrorHandling:
         corrupted_image = b"corrupted image data"
         files = {"image_file": ("corrupted.png", corrupted_image, "image/png")}
 
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.side_effect = ValueError("Could not decode image")
             response = client.post("/recognize_digit", files=files)
             assert response.status_code == 400
@@ -168,12 +169,12 @@ class TestIntegration:
 
     def test_full_recognition_flow(self, client, sample_image_bytes):
         """Test the complete recognition flow"""
-        with patch('app.model') as mock_model:
+        with patch("app.model") as mock_model:
             mock_model.process_and_recognize.return_value = {
                 "status": "success",
                 "recognized_digit": 3,
                 "model_confidence": 0.87,
-                "filename": "integration_test.png"
+                "filename": "integration_test.png",
             }
 
             files = {"image_file": ("integration_test.png", sample_image_bytes, "image/png")}

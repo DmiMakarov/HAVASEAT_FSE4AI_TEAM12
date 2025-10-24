@@ -1,6 +1,7 @@
 """
 Shared test fixtures and configuration
 """
+
 import pytest
 import numpy as np
 from PIL import Image
@@ -15,7 +16,7 @@ def sample_digit_images():
     # Create images for digits 0-9
     for digit in range(10):
         # Create a simple 28x28 grayscale image with the digit
-        img = Image.new('L', (28, 28), color=0)  # Black background
+        img = Image.new("L", (28, 28), color=0)  # Black background
 
         # Add some pattern to make it look like a digit
         pixels = np.array(img)
@@ -27,8 +28,8 @@ def sample_digit_images():
 
         img = Image.fromarray(pixels)
         img_bytes = io.BytesIO()
-        img.save(img_bytes, format='PNG')
-        images[f'digit_{digit}'] = img_bytes.getvalue()
+        img.save(img_bytes, format="PNG")
+        images[f"digit_{digit}"] = img_bytes.getvalue()
 
     return images
 
@@ -43,9 +44,9 @@ def corrupted_image_bytes():
 def large_image_bytes():
     """Create a large image for testing file size limits"""
     # Create a large image (1000x1000)
-    img = Image.new('L', (1000, 1000), color=128)
+    img = Image.new("L", (1000, 1000), color=128)
     img_bytes = io.BytesIO()
-    img.save(img_bytes, format='PNG')
+    img.save(img_bytes, format="PNG")
     return img_bytes.getvalue()
 
 
@@ -64,18 +65,10 @@ def non_image_bytes():
 @pytest.fixture
 def mock_model_response():
     """Mock model response for testing"""
-    return {
-        "status": "success",
-        "recognized_digit": 5,
-        "model_confidence": 0.95,
-        "filename": "test.png"
-    }
+    return {"status": "success", "recognized_digit": 5, "model_confidence": 0.95, "filename": "test.png"}
 
 
 @pytest.fixture
 def mock_model_error_response():
     """Mock model error response for testing"""
-    return {
-        "status": "error",
-        "error": "Model inference failed"
-    }
+    return {"status": "error", "error": "Model inference failed"}
