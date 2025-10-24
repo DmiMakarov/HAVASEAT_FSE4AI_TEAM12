@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from model.model import MNISTModel as Model
 
 app = FastAPI(title="Digit Recognition API", version="1.0.0")
